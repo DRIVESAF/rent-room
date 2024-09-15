@@ -1,14 +1,15 @@
 import { getHomeDataApi } from '../api/home';
-import { IBannerList } from '../models/HomeData';
+import { BannerListDataSource } from '../models/HomeData';
+
 import SwiperLayout from '../views/Home/SwiperLayout';
 
 @Component
 export default struct Home {
-  @State bannerList: IBannerList = [];
+  @State bannerList: BannerListDataSource = new BannerListDataSource()
   // 获取首页数据函数
   getHomeData = async () => {
     const result = await getHomeDataApi()
-    this.bannerList = result.bannerList;
+    this.bannerList.setList(result.bannerList);
   }
 
   // 生命周期函数：初始化渲染时触发
@@ -19,7 +20,7 @@ export default struct Home {
   build() {
     Scroll() {
       Column() {
-        // 轮播图组件，使用 prop 通信
+        // 轮播图组件（使用prop通信）
         SwiperLayout({ bannerList: this.bannerList })
       }
       .width('100%')
