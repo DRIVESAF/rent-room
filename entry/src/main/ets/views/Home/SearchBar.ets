@@ -5,11 +5,10 @@ export default struct SearchBar {
   build() {
     Row({ space: 16 }) {
       // 左侧定位城市
-      Text("北京").fontSize(15).fontColor($r('app.color.white'))
+      Text("北京").fontSize(14).fontColor($r('app.color.white'))
       // 输入框堆叠
       Stack() {
         TextInput()
-          .width(244)
           .height('100%')
           .width('100%')
           .backgroundColor($r('app.color.white'))
@@ -23,7 +22,7 @@ export default struct SearchBar {
             .fontColor($r('app.color.gray'))
             .layoutWeight(1).margin({ left: PADDING_S, right: PADDING_S })
           Column() {
-          }.width(1).backgroundColor('#D7D7D7').height(18).margin({ right: PADDING })
+          }.width(1).backgroundColor($r('app.color.line')).height(18).margin({ right: PADDING_S })
 
           Image($r('app.media.position'))
             .width(18)
