@@ -3,7 +3,13 @@ import { PADDING, PADDING_S } from '../../contants/size'
 @Component
 export default struct SearchBar {
   build() {
-    Row({ space: 16 }) {
+    Flex({
+      direction: FlexDirection.Row,
+      // 垂直居中对齐
+      alignItems: ItemAlign.Center,
+      // 水平分布
+      justifyContent: FlexAlign.SpaceBetween
+    }) {
       // 左侧定位城市
       Text("北京").fontSize(14).fontColor($r('app.color.white'))
       // 输入框堆叠
@@ -35,6 +41,7 @@ export default struct SearchBar {
     }
     .width('100%')
     .height(38)
-    .padding({ left: PADDING, right: PADDING }).margin({ top: 4 })
+    .padding({ left: PADDING, right: PADDING })
+    .margin({ top: 4 })
   }
 }

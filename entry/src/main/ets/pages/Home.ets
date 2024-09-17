@@ -1,22 +1,25 @@
 import { getHomeDataApi } from '../api/home';
-import { BannerListDataSource, INavList, ITileList } from '../models/HomeData';
+import { BannerListDataSource, INavList, IPlanList, ITileList } from '../models/HomeData';
 import SearchBar from '../views/Home/SearchBar'
 import SwiperLayout from '../views/Home/SwiperLayout';
 import NavList from '../views/Home/NavList';
 import { PADDING } from '../contants/size';
 import TileList from '../views/Home/TileList';
+import PlanList from '../views/Home/PlanList';
 
 @Component
 export default struct Home {
   @State bannerList: BannerListDataSource = new BannerListDataSource()
   @State navList: INavList = []
   @State tileList: ITileList = []
+  @State planList: IPlanList = []
   // 获取首页数据函数
   getHomeData = async () => {
     const result = await getHomeDataApi()
     this.bannerList.setList(result.bannerList)
     this.navList = result.navList
     this.tileList = result.tileList
+    this.planList = result.planList
   }
 
   // 生命周期函数：初始化渲染时触发
@@ -33,8 +36,11 @@ export default struct Home {
           Column() {
             // 导航栏排在轮播图下
             NavList({ navList: this.navList })
-
+            // Tile组件
             TileList({ tileList: this.tileList })
+            // 计划列表
+            PlanList({ planList: this.planList })
+
           }.width('100%')
           .padding({ left: PADDING, right: PADDING })
 
