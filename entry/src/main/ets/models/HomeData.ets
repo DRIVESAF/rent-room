@@ -124,22 +124,3 @@ export interface IPlanItem {
 }
 
 export type IPlanList = IPlanItem[]
-
-export interface ITagItem {
-  name: string
-}
-
-export type ITagList = ITagItem[]
-
-export interface RoomRecommendItem {
-  "id": string
-  "housePicture": string
-  "tags": ITagList
-  "houseTitle": string
-  "address": string
-  "rentPriceUnit": string
-  "rentPriceListing": string
-  "rentArea": string
-}
-
-export type IRoomRecommendList = RoomRecommendItem[]
