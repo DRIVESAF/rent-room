@@ -6,6 +6,7 @@ import NavList from '../views/Home/NavList';
 import { PADDING, SHADOW_RADIUS } from '../contants/size';
 import TileList from '../views/Home/TileList';
 import PlanList from '../views/Home/PlanList';
+import RoomRecommend from '../views/Home/RoomRecommend';
 
 @Component
 export default struct Home {
@@ -57,6 +58,9 @@ export default struct Home {
 
           }.width('100%')
           .padding({ left: PADDING, right: PADDING })
+
+          // 房源推荐
+          RoomRecommend()
 
         }
         .width('100%')
