@@ -1,21 +1,27 @@
-import { getHomeDataApi } from '../api/home';
-import { BannerListDataSource, INavList, IPlanList, ITileList } from '../models/HomeData';
-import SearchBar from '../views/Home/SearchBar'
 import SwiperLayout from '../views/Home/SwiperLayout';
+import SearchBar from '../views/Home/SearchBar';
 import NavList from '../views/Home/NavList';
-import { PADDING, SHADOW_RADIUS } from '../contants/size';
 import TileList from '../views/Home/TileList';
 import PlanList from '../views/Home/PlanList';
 import RoomRecommend from '../views/Home/RoomRecommend';
 
+import { getHomeDataApi } from '../api/home';
+import { BannerListDataSource, INavList, IPlanList, ITileList } from '../models/HomeData';
+
+import { PADDING, SHADOW_RADIUS } from '../contants/size';
+
 @Component
 export default struct Home {
+  // 首页数据
   @State bannerList: BannerListDataSource = new BannerListDataSource()
-  @State navList: INavList = []
-  @State tileList: ITileList = []
-  @State planList: IPlanList = []
-  @State adPicture: string = ''
-  // 获取首页数据函数
+  @State navList: INavList = [];
+  @State tileList: ITileList = [];
+  @State planList: IPlanList = [];
+  @State adPicture: string = '';
+  scrollY: number = 0;
+  @State bgColor: string = 'rgba(255, 255, 255, 0)'
+  @State fontColor: string = 'rgb(255, 255, 255)'
+  // 获取首页数据
   getHomeData = async () => {
     const result = await getHomeDataApi()
     this.bannerList.setList(result.bannerList)
@@ -25,23 +31,40 @@ export default struct Home {
     this.adPicture = result.adPicture
   }
 
-  // 生命周期函数：初始化渲染时触发
-  aboutToAppear(): void {
+  // 组件生命周期
+  aboutToAppear() {
     this.getHomeData()
   }
 
+  // 处理滚动
+  handleScroll = (xOffset: number, yOffset: number) => {
+    this.scrollY += yOffset;
+    if (this.scrollY < 0) {
+      this.scrollY = 0;
+    }
+    this.calcColor()
+  }
+  // 计算颜色
+  calcColor = () => {
+    // 滚动计算的 scrollY 的值到达顶部可能不是 0，给点误差
+    if (this.scrollY > 10) {
+      this.bgColor = 'rgba(255, 255, 255, 1)'
+      this.fontColor = 'rgb(0, 0, 0)'
+    } else {
+      this.bgColor = 'rgba(255, 255, 255, 0)'
+      this.fontColor = 'rgb(255, 255, 255)'
+    }
+  }
+
   build() {
-    Scroll() {
-      Stack() {
+    Stack() {
+      Scroll() {
         Column() {
-          // 轮播图组件（使用prop通信）
           SwiperLayout({ bannerList: this.bannerList })
+
           Column() {
-            // 导航栏排在轮播图下
             NavList({ navList: this.navList })
-            // Tile组件
             TileList({ tileList: this.tileList })
-            // 计划列表
             PlanList({ planList: this.planList })
             // 广告
             Image(this.adPicture)
@@ -55,23 +78,20 @@ export default struct Home {
                 radius: SHADOW_RADIUS,
                 color: 'rgba(0,0,0,0.14)'
               })
+          }.padding({ left: PADDING, right: PADDING })
 
-          }.width('100%')
-          .padding({ left: PADDING, right: PADDING })
-
-          // 房源推荐
           RoomRecommend()
-
         }
-        .width('100%')
+        .justifyContent(FlexAlign.Start)
+      }
+      .height('100%')
+      .align(Alignment.TopStart)
+      .scrollBar(BarState.Off)
+      .onDidScroll(this.handleScroll)
 
-        // 搜索框堆叠在轮播图上
-        SearchBar()
-      }.width('100%').alignContent(Alignment.TopStart)
+      SearchBar({ bgColor: this.bgColor, fontColor: this.fontColor })
     }
-    .width('100%')
     .height('100%')
-    .scrollBar(BarState.Off)
-    .align(Alignment.TopStart)
+    .alignContent(Alignment.TopStart)
   }
 }
