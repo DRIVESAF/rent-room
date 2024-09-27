@@ -1,6 +1,6 @@
 import { http } from '../utils/http';
-import type { IHomeData } from '../models/HomeData';
-import type { IRoomRecommendList } from '../models/RoomRecommendDataSource';
+import type { IHomeData } from '../model/HomeData';
+import type { IRoomRecommendList } from '../model/RoomRecommendDataSource';
 
 // 获取首页数据
 export const getHomeDataApi = (): Promise<IHomeData> => {

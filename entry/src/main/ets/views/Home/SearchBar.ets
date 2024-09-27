@@ -1,4 +1,4 @@
-import { PADDING } from '../../contants/size';
+import { PADDING } from '../../constants/size';
 
 @Component
 export default struct SearchBar {

@@ -1,4 +1,4 @@
-import { IBannerItem, BannerListDataSource } from '../../models/HomeData';
+import { IBannerItem, BannerListDataSource } from '../../model/HomeData';
 
 @Component
 export default struct SwiperLayout {

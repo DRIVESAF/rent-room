@@ -1,4 +1,4 @@
-import { INavItem, INavList } from '../../models/HomeData';
+import { INavItem, INavList } from '../../model/HomeData';
 
 @Component
 export default struct NavLisr {

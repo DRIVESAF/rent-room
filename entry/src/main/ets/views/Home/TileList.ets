@@ -1,4 +1,4 @@
-import { ITileItem, ITileList } from '../../models/HomeData'
+import { ITileItem, ITileList } from '../../model/HomeData'
 import { image } from '@kit.ImageKit'
 
 @Component

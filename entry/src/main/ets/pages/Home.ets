@@ -4,11 +4,12 @@ import NavList from '../views/Home/NavList';
 import TileList from '../views/Home/TileList';
 import PlanList from '../views/Home/PlanList';
 import RoomRecommend from '../views/Home/RoomRecommend';
+import Ad from '../views/Home/Ad'
 
 import { getHomeDataApi } from '../api/home';
-import { BannerListDataSource, INavList, IPlanList, ITileList } from '../models/HomeData';
+import { BannerListDataSource, INavList, IPlanList, ITileList } from '../model/HomeData';
 
-import { PADDING, SHADOW_RADIUS } from '../contants/size';
+import { PADDING, SHADOW_RADIUS } from '../constants/size';
 
 @Component
 export default struct Home {
@@ -67,17 +68,7 @@ export default struct Home {
             TileList({ tileList: this.tileList })
             PlanList({ planList: this.planList })
             // 广告
-            Image(this.adPicture)
-              .width('100%')
-              .height(60)
-              .objectFit(ImageFit.Fill)
-              .margin({ top: 10 })
-              .shadow({
-                offsetX: 0,
-                offsetY: 0,
-                radius: SHADOW_RADIUS,
-                color: 'rgba(0,0,0,0.14)'
-              })
+            Ad({ adPicture: this.adPicture })
           }.padding({ left: PADDING, right: PADDING })
 
           RoomRecommend()

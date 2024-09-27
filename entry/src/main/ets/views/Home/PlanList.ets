@@ -1,4 +1,4 @@
-import { IPlanItem, IPlanList } from '../../models/HomeData'
+import { IPlanItem, IPlanList } from '../../model/HomeData'
 
 @Component
 export default struct PlanList {

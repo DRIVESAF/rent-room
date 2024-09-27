@@ -1,6 +1,6 @@
-import { IRoomRecommendItem, ITagItem, RoomRecommendDataSource } from '../../models/RoomRecommendDataSource'
+import { IRoomRecommendItem, ITagItem, RoomRecommendDataSource } from '../../model/RoomRecommendDataSource'
 import { getRoomRecommendListApi } from '../../api/home'
-import { BORDER_RADIUS, PADDING } from '../../contants/size';
+import { BORDER_RADIUS, PADDING } from '../../constants/size';
 
 @Component
 export default struct RoomRecommend {
