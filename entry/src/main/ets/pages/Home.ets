@@ -5,9 +5,10 @@ import TileList from '../views/Home/TileList';
 import PlanList from '../views/Home/PlanList';
 import RoomRecommend from '../views/Home/RoomRecommend';
 import Ad from '../views/Home/Ad'
+import ScrollContainer from '../components/ScrollContainer/Index'
 
 import { getHomeDataApi } from '../api/home';
-import { BannerListDataSource, INavList, IPlanList, ITileList } from '../model/HomeData';
+import { BannerListDataSource, INavList, IPlanList, ITileList, IColor } from '../model/HomeData';
 
 import { PADDING, SHADOW_RADIUS } from '../constants/size';
 
@@ -37,52 +38,36 @@ export default struct Home {
     this.getHomeData()
   }
 
-  // 处理滚动
-  handleScroll = (xOffset: number, yOffset: number) => {
-    this.scrollY += yOffset;
-    if (this.scrollY < 0) {
-      this.scrollY = 0;
-    }
-    this.calcColor()
+  @Builder
+  navBuilder($$: IColor) {
+    // 搜索栏
+    SearchBar({ bgColor: $$.bgColor, fontColor: $$.fontColor })
   }
-  // 计算颜色
-  calcColor = () => {
-    // 滚动计算的 scrollY 的值到达顶部可能不是 0，给点误差
-    if (this.scrollY > 10) {
-      this.bgColor = 'rgba(255, 255, 255, 1)'
-      this.fontColor = 'rgb(0, 0, 0)'
-    } else {
-      this.bgColor = 'rgba(255, 255, 255, 0)'
-      this.fontColor = 'rgb(255, 255, 255)'
-    }
+
+  @Builder
+  contentBuilder() {
+    // 轮播图组件
+    SwiperLayout({ bannerList: this.bannerList })
+    Column() {
+      NavList({ navList: this.navList })
+      TileList({ tileList: this.tileList })
+      PlanList({ planList: this.planList })
+      // 广告
+      Ad({ adPicture: this.adPicture })
+    }.padding({ left: PADDING, right: PADDING })
+
+    // 房源推荐
+    RoomRecommend()
   }
 
   build() {
-    Stack() {
-      Scroll() {
-        Column() {
-          SwiperLayout({ bannerList: this.bannerList })
-
-          Column() {
-            NavList({ navList: this.navList })
-            TileList({ tileList: this.tileList })
-            PlanList({ planList: this.planList })
-            // 广告
-            Ad({ adPicture: this.adPicture })
-          }.padding({ left: PADDING, right: PADDING })
-
-          RoomRecommend()
-        }
-        .justifyContent(FlexAlign.Start)
+    ScrollContainer({
+      navBuilderParam: this.navBuilder,
+      // 改写成箭头函数，让 Builder 函数 this 指向组件实例
+      contentBuilderParam: () => {
+        this.contentBuilder()
       }
-      .height('100%')
-      .align(Alignment.TopStart)
-      .scrollBar(BarState.Off)
-      .onDidScroll(this.handleScroll)
+    })
 
-      SearchBar({ bgColor: this.bgColor, fontColor: this.fontColor })
-    }
-    .height('100%')
-    .alignContent(Alignment.TopStart)
   }
 }
