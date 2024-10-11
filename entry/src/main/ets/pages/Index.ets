@@ -3,6 +3,7 @@ import See from './See'
 import Service from './Service'
 import My from './My'
 import Discover from './Discover'
+import { getWindowBottomHeight } from '../utils/responsive'
 
 @Entry
 @Component

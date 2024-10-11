@@ -1,4 +1,5 @@
 import { IColor } from '../../model/HomeData'
+import { getWindowTopHeight } from '../../utils/responsive';
 
 @Component
 export default struct Index {
@@ -43,13 +44,17 @@ export default struct Index {
       .height('100%')
       .align(Alignment.TopStart)
       .scrollBar(BarState.Off)
+      .backgroundColor($r('app.color.bg_gray_second'))
+      .padding({ bottom: 10 })
       .onDidScroll(this.handleScroll)
 
       // 搜索栏
       // 按引用传递
-      this.navBuilderParam({ bgColor: this.bgColor, fontColor: this.fontColor })
+      Column() {
+        this.navBuilderParam({ fontColor: this.fontColor, bgColor: this.bgColor })
+      }.backgroundColor(this.bgColor).padding({ top: getWindowTopHeight() })
     }
-    .width('100%')
+    .height('100%')
     .alignContent(Alignment.TopStart)
   }
 }
